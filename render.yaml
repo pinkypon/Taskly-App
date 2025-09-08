@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: taskly
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: Taskly
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://taskly-d79v.onrender.com
+      # Do not include DB_HOST, DB_USERNAME, DB_PASSWORD, APP_KEY here
