@@ -5,10 +5,10 @@ namespace App\Notifications;
 use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\URL; 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Config;
 
-class CustomVerifyEmail extends VerifyEmailNotification 
+class CustomVerifyEmail extends VerifyEmailNotification
 {
     /**
      * Generate the verification URL.
