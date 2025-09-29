@@ -5,14 +5,11 @@ namespace App\Notifications;
 use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Contracts\Queue\ShouldQueue;  
-use Illuminate\Bus\Queueable;     
+use Illuminate\Support\Facades\URL; 
 use Illuminate\Support\Facades\Config;
 
-class CustomVerifyEmail extends VerifyEmailNotification implements ShouldQueue
+class CustomVerifyEmail extends VerifyEmailNotification 
 {
-    use Queueable;
     /**
      * Generate the verification URL.
      */
