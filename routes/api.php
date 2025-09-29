@@ -48,17 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             return response()->json(['message' => 'Already verified']);
         }
 
-        try {
-            $request->user()->sendEmailVerificationNotification();
-            return response()->json(['message' => 'Verification link sent']);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Failed to send verification email',
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ], 500);
-        }
+        $request->user()->sendEmailVerificationNotification();
+        return response()->json(['message' => 'Verification link sent']);
     })->middleware('throttle:3,1'); // 3 requests per 1 minute
 });
 
