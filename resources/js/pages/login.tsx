@@ -1,8 +1,8 @@
-import { AlertCircle, ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import axios, { csrf } from '../lib/axios';
+import { AlertCircle, ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import axios, { csrf } from "../lib/axios";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -14,10 +14,10 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
 
     const [form, setForm] = useState({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
     });
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     useEffect(() => {
         // Trigger animation
@@ -29,27 +29,27 @@ export default function Login() {
             setMousePosition({ x: e.clientX, y: e.clientY });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
         // Clear error when user starts typing
-        if (error) setError('');
+        if (error) setError("");
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (submitting) return;
         setSubmitting(true);
-        setError('');
+        setError("");
 
         try {
             await csrf();
-            await axios.post('/login', form);
+            await axios.post("/login", form);
             await fetchUser();
-            navigate('/home');
+            navigate("/home");
         } catch (err: any) {
             const res = err.response;
 
@@ -60,10 +60,10 @@ export default function Login() {
             } else if (res?.status === 401 && res.data?.message) {
                 setError(res.data.message);
             } else {
-                setError('Login failed. Please try again.');
+                setError("Login failed. Please try again.");
             }
 
-            console.error('Login error:', res?.data || err.message);
+            console.error("Login error:", res?.data || err.message);
         } finally {
             setSubmitting(false);
         }
@@ -77,39 +77,51 @@ export default function Login() {
                 <div
                     className="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-gradient-to-br from-indigo-400/10 via-indigo-500/8 to-blue-500/10 blur-3xl"
                     style={{
-                        transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`,
+                        transform: `translate(${mousePosition.x * 0.02}px, ${
+                            mousePosition.y * 0.02
+                        }px)`,
                     }}
                 ></div>
                 <div
                     className="absolute right-1/4 bottom-1/4 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-blue-400/10 via-indigo-500/8 to-indigo-600/10 blur-3xl"
                     style={{
-                        transform: `translate(${mousePosition.x * -0.01}px, ${mousePosition.y * -0.01}px)`,
+                        transform: `translate(${mousePosition.x * -0.01}px, ${
+                            mousePosition.y * -0.01
+                        }px)`,
                     }}
                 ></div>
 
                 {/* Additional floating elements */}
-                <div className="absolute top-20 right-20 h-4 w-4 animate-bounce rounded-full bg-indigo-300/20" style={{ animationDelay: '1s' }}></div>
+                <div
+                    className="absolute top-20 right-20 h-4 w-4 animate-bounce rounded-full bg-indigo-300/20"
+                    style={{ animationDelay: "1s" }}
+                ></div>
                 <div
                     className="absolute bottom-32 left-20 h-6 w-6 animate-bounce rounded-full bg-indigo-400/20"
-                    style={{ animationDelay: '3s' }}
+                    style={{ animationDelay: "3s" }}
                 ></div>
             </div>
 
             <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
                 <div
-                    className={`w-full max-w-md transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                        }`}
+                    className={`w-full max-w-md transform transition-all duration-1000 ${
+                        isVisible
+                            ? "translate-y-0 opacity-100"
+                            : "translate-y-10 opacity-0"
+                    }`}
                 >
                     {/* Header */}
                     <div className="mb-8 text-center">
                         <div className="mb-6 flex items-center justify-center gap-3">
-                            <h1 className="text-4xl font-black text-indigo-900 md:text-4xl">Taskly</h1>
+                            <h1 className="text-4xl font-black text-indigo-900 md:text-4xl">
+                                Taskly
+                            </h1>
                             <img
                                 src="/images/task-logo.png"
                                 alt="Logo"
                                 className="h-12 w-12 md:h-12 md:w-12"
                                 onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
+                                    e.currentTarget.style.display = "none";
                                 }}
                             />
                         </div>
@@ -129,12 +141,17 @@ export default function Login() {
                                             <div className="flex-shrink-0">
                                                 <AlertCircle className="h-5 w-5 text-red-600" />
                                             </div>
-                                            <div className="text-sm font-medium text-red-800">{error}</div>
+                                            <div className="text-sm font-medium text-red-800">
+                                                {error}
+                                            </div>
                                         </div>
                                     </div>
                                 )}
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="space-y-6"
+                                >
                                     {/* Email Field */}
                                     <div className="space-y-2">
                                         <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
@@ -147,10 +164,11 @@ export default function Login() {
                                                 name="email"
                                                 value={form.email}
                                                 onChange={handleChange}
-                                                className={`w-full rounded-xl border-2 px-4 py-3 transition-all duration-300 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none ${error
-                                                        ? 'border-red-300 bg-red-50/50'
-                                                        : 'border-gray-200 bg-white/50 focus:border-indigo-400 focus:bg-white'
-                                                    }`}
+                                                className={`w-full rounded-xl border-2 px-4 py-3 transition-all duration-300 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none ${
+                                                    error
+                                                        ? "border-red-300 bg-red-50/50"
+                                                        : "border-gray-200 bg-white/50 focus:border-indigo-400 focus:bg-white"
+                                                }`}
                                                 placeholder="you@example.com"
                                                 required
                                             />
@@ -165,23 +183,36 @@ export default function Login() {
                                         </label>
                                         <div className="relative">
                                             <input
-                                                type={showPassword ? 'text' : 'password'}
+                                                type={
+                                                    showPassword
+                                                        ? "text"
+                                                        : "password"
+                                                }
                                                 name="password"
                                                 value={form.password}
                                                 onChange={handleChange}
-                                                className={`w-full rounded-xl border-2 px-4 py-3 pr-12 transition-all duration-300 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none ${error
-                                                        ? 'border-red-300 bg-red-50/50'
-                                                        : 'border-gray-200 bg-white/50 focus:border-indigo-400 focus:bg-white'
-                                                    }`}
+                                                className={`w-full rounded-xl border-2 px-4 py-3 pr-12 transition-all duration-300 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none ${
+                                                    error
+                                                        ? "border-red-300 bg-red-50/50"
+                                                        : "border-gray-200 bg-white/50 focus:border-indigo-400 focus:bg-white"
+                                                }`}
                                                 placeholder="••••••••"
                                                 required
                                             />
                                             <button
                                                 type="button"
-                                                onClick={() => setShowPassword(!showPassword)}
+                                                onClick={() =>
+                                                    setShowPassword(
+                                                        !showPassword
+                                                    )
+                                                }
                                                 className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 transition-colors hover:text-indigo-600"
                                             >
-                                                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                                {showPassword ? (
+                                                    <EyeOff className="h-5 w-5" />
+                                                ) : (
+                                                    <Eye className="h-5 w-5" />
+                                                )}
                                             </button>
                                         </div>
                                     </div>
@@ -222,7 +253,7 @@ export default function Login() {
                                 {/* Register Link */}
                                 <div className="mt-8 text-center">
                                     <p className="text-gray-600">
-                                        Don't have an account?{' '}
+                                        Don't have an account?{" "}
                                         <Link
                                             to="/register"
                                             className="font-semibold text-indigo-600 transition-colors hover:text-indigo-700 hover:underline"
@@ -235,7 +266,9 @@ export default function Login() {
                                 {/* Divider */}
                                 <div className="my-8 flex items-center">
                                     <div className="flex-1 border-t border-gray-200"></div>
-                                    <div className="mx-4 text-sm text-gray-500">or</div>
+                                    <div className="mx-4 text-sm text-gray-500">
+                                        or
+                                    </div>
                                     <div className="flex-1 border-t border-gray-200"></div>
                                 </div>
 
@@ -255,7 +288,10 @@ export default function Login() {
 
                     {/* Back to Landing */}
                     <div className="mt-6 text-center">
-                        <Link to="/" className="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-indigo-600">
+                        <Link
+                            to="/"
+                            className="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-indigo-600"
+                        >
                             ← Back to home
                         </Link>
                     </div>
